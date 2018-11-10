@@ -12,6 +12,7 @@
 frame frame_new(frame_data* data, vec2 dims) {
     frame f = mscalloc(1, struct frame);
     f->data = data;
+    f->align = FRAME_ALIGN_DEFAULT;
     f->dims = dims;
     f->m = NULL;
 
@@ -122,9 +123,20 @@ void frame_rebuild_mesh(frame f) {
             len += 6;
         }
 
-        vec2 halfsize = vec2_mul(f->dims, 0.5f);
+        // Calculate and apply offset for alignment
+        vec2 offset = vec2_zero;
+        if(f->align == FRAME_ALIGN_TOP || f->align == FRAME_ALIGN_CENTER || f->align == FRAME_ALIGN_BOTTOM) {
+            offset.x = f->dims.x * -0.5f;
+        } else if(f->align == FRAME_ALIGN_TOP_RIGHT || f->align == FRAME_ALIGN_RIGHT || f->align == FRAME_ALIGN_BOTTOM_RIGHT) {
+            offset.x = f->dims.x * -1.0f;
+        }
+        if(f->align == FRAME_ALIGN_LEFT || f->align == FRAME_ALIGN_CENTER || f->align == FRAME_ALIGN_RIGHT) {
+            offset.y = f->dims.y * -0.5f;
+        } else if(f->align == FRAME_ALIGN_BOTTOM_LEFT || f->align == FRAME_ALIGN_BOTTOM || f->align == FRAME_ALIGN_BOTTOM_RIGHT) {
+            offset.y = f->dims.y * -1.0f;
+        }
         for(uint8 i = 0; i < len; ++i) {
-            verts[i].position.xy = vec2_sub(verts[i].position.xy, halfsize);
+            verts[i].position.xy = vec2_add(verts[i].position.xy, offset);
         }
 
         if(f->m) {
@@ -161,6 +173,20 @@ void frame_set_dimensions(frame f, vec2 dims) {
     check_return(f != NULL, "Frame is NULL", );
 
     f->dims = dims;
+    f->is_dirty = true;
+}
+
+// Gets/sets the alignment of the frame
+frame_alignment frame_get_align(frame f) {
+    check_return(f != NULL, "Frame is NULL", FRAME_ALIGN_DEFAULT);
+
+    return f->align;
+}
+void frame_set_align(frame f, frame_alignment align) {
+    check_return(f != NULL, "Frame is NULL", );
+    check_return(align <= FRAME_ALIGN_LAST, "Invalid frame alignment 0x%x", , align);
+
+    f->align = align;
     f->is_dirty = true;
 }
 
