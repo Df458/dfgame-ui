@@ -4,6 +4,7 @@
 #include "frame_io.h"
 
 #include "core/check.h"
+#include "core/stringutil.h"
 #include "resource/paths.h"
 #include "resource/texture_loader.h"
 
@@ -26,6 +27,7 @@ void load_frame(const char* path, frame_data* f) {
     }
 
     xml_read_frame(root, f, path);
+    f->asset_path = nstrdup(path);
 
     xmlFreeDoc(doc);
 }
