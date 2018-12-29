@@ -12,7 +12,7 @@
 frame frame_new(frame_data* data, vec2 dims) {
     frame f = mscalloc(1, struct frame);
     f->data = data;
-    f->align = FRAME_ALIGN_DEFAULT;
+    f->align = ALIGN_DEFAULT;
     f->dims = dims;
     f->m = NULL;
 
@@ -125,14 +125,14 @@ void frame_rebuild_mesh(frame f) {
 
         // Calculate and apply offset for alignment
         vec2 offset = vec2_zero;
-        if(f->align == FRAME_ALIGN_TOP || f->align == FRAME_ALIGN_CENTER || f->align == FRAME_ALIGN_BOTTOM) {
+        if(f->align == ALIGN_TOP || f->align == ALIGN_CENTER || f->align == ALIGN_BOTTOM) {
             offset.x = f->dims.x * -0.5f;
-        } else if(f->align == FRAME_ALIGN_TOP_RIGHT || f->align == FRAME_ALIGN_RIGHT || f->align == FRAME_ALIGN_BOTTOM_RIGHT) {
+        } else if(f->align == ALIGN_TOP_RIGHT || f->align == ALIGN_RIGHT || f->align == ALIGN_BOTTOM_RIGHT) {
             offset.x = f->dims.x * -1.0f;
         }
-        if(f->align == FRAME_ALIGN_LEFT || f->align == FRAME_ALIGN_CENTER || f->align == FRAME_ALIGN_RIGHT) {
+        if(f->align == ALIGN_LEFT || f->align == ALIGN_CENTER || f->align == ALIGN_RIGHT) {
             offset.y = f->dims.y * -0.5f;
-        } else if(f->align == FRAME_ALIGN_BOTTOM_LEFT || f->align == FRAME_ALIGN_BOTTOM || f->align == FRAME_ALIGN_BOTTOM_RIGHT) {
+        } else if(f->align == ALIGN_BOTTOM_LEFT || f->align == ALIGN_BOTTOM || f->align == ALIGN_BOTTOM_RIGHT) {
             offset.y = f->dims.y * -1.0f;
         }
         for(uint8 i = 0; i < len; ++i) {
@@ -177,14 +177,14 @@ void frame_set_dimensions(frame f, vec2 dims) {
 }
 
 // Gets/sets the alignment of the frame
-frame_alignment frame_get_align(frame f) {
-    check_return(f != NULL, "Frame is NULL", FRAME_ALIGN_DEFAULT);
+alignment_2d frame_get_align(frame f) {
+    check_return(f != NULL, "Frame is NULL", ALIGN_DEFAULT);
 
     return f->align;
 }
-void frame_set_align(frame f, frame_alignment align) {
+void frame_set_align(frame f, alignment_2d align) {
     check_return(f != NULL, "Frame is NULL", );
-    check_return(align <= FRAME_ALIGN_LAST, "Invalid frame alignment 0x%x", , align);
+    check_return(align <= ALIGN_LAST, "Invalid frame alignment 0x%x", , align);
 
     f->align = align;
     f->is_dirty = true;

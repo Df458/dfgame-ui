@@ -62,12 +62,12 @@ int main(int argc, char** argv) {
     // Create frame
     load_frame(assets_path(frame_file, NULL), &f_data_test);
     f_test = frame_new(&f_data_test, dims);
-    frame_set_align(f_test, FRAME_ALIGN_CENTER);
+    frame_set_align(f_test, ALIGN_CENTER);
 
     // Create help text
     char* p = assets_path("OpenSans-Regular.ttf", NULL);
     info_text = text_new(load_font(p, 16), info_str);
-    text_set_align(info_text, TEXT_ALIGN_BOTTOM_LEFT);
+    text_set_align(info_text, ALIGN_BOTTOM_LEFT);
     sfree(p);
 
     // Input bindings

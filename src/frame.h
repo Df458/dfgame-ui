@@ -5,30 +5,14 @@
 
 #include "graphics/mesh.hd"
 #include "graphics/shader.hd"
+#include "math/alignment.h"
 #include "math/matrix.hd"
-
-typedef enum frame_alignment {
-    FRAME_ALIGN_TOP = 0,
-    FRAME_ALIGN_BOTTOM,
-    FRAME_ALIGN_LEFT,
-    FRAME_ALIGN_RIGHT,
-
-    FRAME_ALIGN_TOP_LEFT,
-    FRAME_ALIGN_TOP_RIGHT,
-    FRAME_ALIGN_BOTTOM_LEFT,
-    FRAME_ALIGN_BOTTOM_RIGHT,
-
-    FRAME_ALIGN_CENTER,
-
-    FRAME_ALIGN_LAST    = FRAME_ALIGN_CENTER,
-    FRAME_ALIGN_DEFAULT = FRAME_ALIGN_TOP_LEFT
-} frame_alignment;
 
 typedef struct frame {
     frame_data* data;
 
     vec2 dims;
-    frame_alignment align;
+    alignment_2d align;
     mesh m;
     bool is_dirty;
 }* frame;
@@ -52,8 +36,8 @@ vec2 frame_get_dimensions(frame f);
 void frame_set_dimensions(frame f, vec2 dims);
 
 // Gets/sets the alignment of the frame
-frame_alignment frame_get_align(frame f);
-void frame_set_align(frame f, frame_alignment align);
+alignment_2d frame_get_align(frame f);
+void frame_set_align(frame f, alignment_2d align);
 
 // Return the frame's generated mesh
 const mesh frame_get_mesh(frame f);
