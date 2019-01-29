@@ -3,6 +3,8 @@ uisrc  = [
     'frame.c',
     'frame_data.c',
     'frame_io.c',
+
+    'layout.c',
 ]
 uiinc  = []
 uilib  = static_library('dfgame_ui', uisrc,
@@ -24,6 +26,9 @@ install_headers([
   'frame.h',
   'frame_data.h',
   'frame_io.h',
+
+  'layout.h',
+  'layout_element.h',
 ], subdir : 'dfgame/ui')
 
 ui = declare_dependency(include_directories : include_directories('.'), link_with : uilib)

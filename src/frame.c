@@ -124,19 +124,13 @@ void frame_rebuild_mesh(frame f) {
         }
 
         // Calculate and apply offset for alignment
-        vec2 offset = vec2_zero;
-        if(f->align == ALIGN_TOP || f->align == ALIGN_CENTER || f->align == ALIGN_BOTTOM) {
-            offset.x = f->dims.x * -0.5f;
-        } else if(f->align == ALIGN_TOP_RIGHT || f->align == ALIGN_RIGHT || f->align == ALIGN_BOTTOM_RIGHT) {
-            offset.x = f->dims.x * -1.0f;
-        }
-        if(f->align == ALIGN_LEFT || f->align == ALIGN_CENTER || f->align == ALIGN_RIGHT) {
-            offset.y = f->dims.y * -0.5f;
-        } else if(f->align == ALIGN_BOTTOM_LEFT || f->align == ALIGN_BOTTOM || f->align == ALIGN_BOTTOM_RIGHT) {
-            offset.y = f->dims.y * -1.0f;
-        }
+        aabb_2d box = {
+            .position = vec2_zero,
+            .dimensions = f->dims
+        };
+        vec2 offset = aabb_get_origin_2d(box, f->align);
         for(uint8 i = 0; i < len; ++i) {
-            verts[i].position.xy = vec2_add(verts[i].position.xy, offset);
+            verts[i].position.xy = vec2_sub(verts[i].position.xy, offset);
         }
 
         if(f->m) {

@@ -19,8 +19,7 @@ void load_frame(const char* path, frame_data* f) {
     check_return(root != NULL, "Frame file %s is invalid", , path);
 
     char* temp_path = NULL;
-    xml_property_read(root, "path", &temp_path);
-    if(temp_path) {
+    if(xml_property_read(root, "path", &temp_path)) {
         error("Frame file %s redirects to %s, this is not allowed", path, temp_path);
         sfree(temp_path);
         return;

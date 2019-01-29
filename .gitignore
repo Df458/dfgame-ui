@@ -7,6 +7,8 @@ lib/*.a
 build
 crossbuild
 
+compile_commands.json
+
 subprojects/dfgame
 subprojects/glew-2.1.0
 subprojects/glfw
