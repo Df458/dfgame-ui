@@ -59,9 +59,9 @@ container_index menu_move_cursor(menu m, int16 offset) {
             } while(m->cursor < -offset);
             m->cursor += offset;
         }
-    } else if(offset > 0 && m->cursor + offset > entry_count) {
+    } else if(offset > 0 && m->cursor + offset >= entry_count) {
         if(!m->can_wrap) {
-            m->cursor = array_get_length(m->entries) - 1;
+            m->cursor = entry_count - 1;
         } else {
             do {
                 offset -= entry_count;
