@@ -96,6 +96,18 @@ menu_entry* menu_get_entry(menu m, container_index index) {
     return array_get(m->entries, index);
 }
 
+void menu_clear(menu m) {
+    check_return(m != NULL, "Menu is NULL", );
+
+    array_foreach(m->entries, iter) {
+        menu_entry* entry = iter.data;
+        text_free(entry->label, false);
+        array_remove_iter(m->entries, &iter);
+    }
+
+    m->cursor = 0;
+}
+
 void menu_draw_entry(menu m, array_iter iter, shader s, mat4 vp) {
     menu_entry* entry = iter.data;
 

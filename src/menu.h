@@ -28,6 +28,12 @@ container_index menu_move_cursor(menu m, int16 offset);
 menu menu_activate(menu m);
 menu_entry* menu_get_entry(menu m, container_index index);
 
+/** @brief Remove all entries from the given menu
+ *
+ * @param m The mnenu
+ */
+void menu_clear(menu m);
+
 void menu_draw_entry(menu m, array_iter entry, shader s, mat4 vp);
 vec2 menu_calculate_dims(menu m);
 
