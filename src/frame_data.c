@@ -9,6 +9,7 @@ void frame_data_new_default(frame_data* f, gltex tex, aabb_2d frame_box, uint16 
     check_return(f != NULL, "Frame data is NULL", );
 
     f->texture = tex;
+    f->margin = margin;
     for(uint8 i = 0; i < 9; ++i) {
         f->uvs[i] = frame_box;
 

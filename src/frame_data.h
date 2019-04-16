@@ -8,6 +8,7 @@
 typedef struct frame_data {
     gltex texture;
     aabb_2d uvs[9];
+    uint16 margin;
 
     char* asset_path;
 } frame_data;
