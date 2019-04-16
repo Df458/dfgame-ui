@@ -38,7 +38,11 @@ void layout_update(layout* l) {
                 box.dimensions.x = clamp(box.dimensions.x, 0, l->bounds.calculated_bounds.dimensions.x);
                 box.dimensions.y = clamp(box.dimensions.y, 0, l->bounds.calculated_bounds.dimensions.y);
                 aabb_2d bounds = aabb_align_box_2d(box, l->bounds.calculated_bounds, elem->align);
-                elem->calculated_bounds = (aabb_2d){ .position=vec2_add(bounds.position, elem->padding), .dimensions=box.dimensions };
+            
+                elem->calculated_bounds = (aabb_2d) {
+                    .position=vec2_add(bounds.position, elem->padding),
+                    .dimensions=vec2_sub(box.dimensions, vec2_mul(elem->padding, 2))
+                };
             }
         break;
         // Horizontal layout type: Children are placed next to each other in a horizontal line, and resize proportionally if the line overflows
