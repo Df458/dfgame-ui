@@ -25,7 +25,7 @@ container_index menu_add_entry(menu m, const char* label, menu submenu, menu_act
 
     array_add(m->entries, entry);
 
-    return array_get_length(m->entries);
+    return array_get_length(m->entries) - 1;
 }
 
 container_index menu_set_cursor(menu m, container_index index) {
